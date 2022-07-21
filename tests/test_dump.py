@@ -1,3 +1,6 @@
+from pydump import debug_dump
+
+
 def test_dump():
 
     def foo():
@@ -30,3 +33,5 @@ def test_dump():
         print("Exception caught, writing %s" % filename)
         pydump.save_dump(filename)
         print("Run 'python -m pydump %s' to debug" % (filename))
+
+    debug_dump(filename)
