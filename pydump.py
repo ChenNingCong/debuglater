@@ -140,6 +140,11 @@ class FakeCode(object):
         self.co_lnotab = code.co_lnotab
         self.co_varnames = code.co_varnames
         self.co_flags = code.co_flags
+        self.co_code = code.co_code
+
+        # co_lines was introduced in a recent version
+        if hasattr(code, 'co_lines'):
+            self.co_lines = code.co_lines
 
 
 class FakeFrame(object):

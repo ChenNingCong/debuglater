@@ -1,7 +1,9 @@
+from unittest.mock import Mock
+
 from pydump import debug_dump
 
 
-def test_dump():
+def test_dump(capsys, monkeypatch):
 
     def foo():
         foovar = 7
@@ -23,6 +25,7 @@ def test_dump():
             self.momodata = "Some data"
 
         def raiser(self):
+            x = 1
             raise Exception("BOOM!")
 
     try:
@@ -34,4 +37,12 @@ def test_dump():
         pydump.save_dump(filename)
         print("Run 'python -m pydump %s' to debug" % (filename))
 
-    debug_dump(filename)
+    mock = Mock(side_effect=['print(f"x is {x}")', 'quit'])
+
+    with monkeypatch.context() as m:
+        m.setattr('builtins.input', mock)
+        debug_dump(filename)
+
+    out, _ = capsys.readouterr()
+
+    assert 'x is 1' in out
