@@ -18,6 +18,9 @@ DEV = [
     'flake8',
     'invoke',
     'twine',
+    # for tests
+    'pandas',
+    'numpy',
 ]
 
 # get version without importing
