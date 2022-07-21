@@ -1,6 +1,17 @@
-#!/usr/bin/env python
+import re
+import ast
+from glob import glob
+from os.path import basename, splitext
 
+from setuptools import find_packages
 from setuptools import setup
+
+_version_re = re.compile(r'__version__\s+=\s+(.*)')
+
+with open('src/pydump/__init__.py', 'rb') as f:
+    VERSION = str(
+        ast.literal_eval(
+            _version_re.search(f.read().decode('utf-8')).group(1)))
 
 DESCRIPTION = """
 Pydump allows post-mortem debugging for Python programs.
@@ -23,23 +34,18 @@ DEV = [
     'numpy',
 ]
 
-# get version without importing
-__version__ = 'unknown'
-for line in open('pydump.py'):
-    if line.startswith('__version__ = '):
-        exec(line)
-        break
-
 setup(
     name='pydump',
-    version=__version__,
+    version=VERSION,
     description='Post-mortem debugging for Python programs',
     long_description=DESCRIPTION,
-    author='Eli Finer',
+    author='Ploomber',
     license='MIT',
-    author_email='eli.finer@gmail.com',
-    url='https://github.com/gooli/pydump',
-    py_modules=['pydump'],
+    author_email='contact@plooomber.io',
+    url='https://github.com/ploomber/pydump',
+    packages=find_packages('src'),
+    package_dir={'': 'src'},
+    py_modules=[splitext(basename(path))[0] for path in glob('src/*.py')],
     extras_require={
         'dev': DEV,
     },

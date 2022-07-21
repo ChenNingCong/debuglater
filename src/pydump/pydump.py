@@ -43,7 +43,6 @@ try:
 except ImportError:
     dill = None
 
-__version__ = "1.2.0"
 DUMP_VERSION = 1
 
 
