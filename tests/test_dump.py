@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from pydump.pydump import debug_dump
+from pydump import pydump
 
 
 def foo():
@@ -49,7 +49,6 @@ def test_dump(capsys, monkeypatch):
     try:
         foo()
     except:
-        import pydump
         filename = __file__ + '.dump'
         pydump.run(filename)
 
@@ -57,7 +56,7 @@ def test_dump(capsys, monkeypatch):
 
     with monkeypatch.context() as m:
         m.setattr('builtins.input', mock)
-        debug_dump(filename)
+        pydump.debug_dump(filename)
 
     out, _ = capsys.readouterr()
 
@@ -73,7 +72,6 @@ def test_data_structures(capsys, monkeypatch, function, result):
     try:
         function()
     except:
-        import pydump
         filename = __file__ + '.dump'
         pydump.run(filename)
 
@@ -81,7 +79,7 @@ def test_data_structures(capsys, monkeypatch, function, result):
 
     with monkeypatch.context() as m:
         m.setattr('builtins.input', mock)
-        debug_dump(filename)
+        pydump.debug_dump(filename)
 
     out, _ = capsys.readouterr()
 

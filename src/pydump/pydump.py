@@ -43,6 +43,8 @@ try:
 except ImportError:
     dill = None
 
+from pydump import __version__
+
 DUMP_VERSION = 1
 
 
