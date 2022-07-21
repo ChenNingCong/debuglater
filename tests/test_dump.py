@@ -33,9 +33,7 @@ def test_dump(capsys, monkeypatch):
     except:
         import pydump
         filename = __file__ + '.dump'
-        print("Exception caught, writing %s" % filename)
-        pydump.save_dump(filename)
-        print("Run 'python -m pydump %s' to debug" % (filename))
+        pydump.run(filename)
 
     mock = Mock(side_effect=['print(f"x is {x}")', 'quit'])
 

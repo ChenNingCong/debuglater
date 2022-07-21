@@ -312,5 +312,12 @@ def main():
     return debug_dump(args.filename, dbg.post_mortem)
 
 
+def run(file):
+    filename = file + '.dump'
+    print("Exception caught, writing %s" % filename)
+    save_dump(filename)
+    print("Run 'python -m pydump %s' to debug" % (filename))
+
+
 if __name__ == "__main__":
     sys.exit(main() or 0)
