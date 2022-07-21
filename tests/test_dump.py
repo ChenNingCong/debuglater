@@ -1,12 +1,13 @@
-if __name__ == '__main__':
+def test_dump():
+
     def foo():
         foovar = 7
         bar()
 
     def bar():
         barvar = "hello"
-        list_sample = [1,2,3,4]
-        dict_sample = {'a':1, 'b':2}
+        list_sample = [1, 2, 3, 4]
+        dict_sample = {'a': 1, 'b': 2}
         baz()
 
     def baz():
@@ -14,6 +15,7 @@ if __name__ == '__main__':
         momo.raiser()
 
     class Momo(object):
+
         def __init__(self):
             self.momodata = "Some data"
 
