@@ -1,5 +1,7 @@
 # CHANGELOG
 
+## 1.3.1dev
+
 ## 1.3 (2022-07-22)
 
 *First version released by Ploomber*
