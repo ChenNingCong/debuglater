@@ -32,8 +32,10 @@ python crash.py
 Debug:
 
 ```sh
-debuglater crash.py.dump
+dltr crash.py.dump
 ```
+
+*Note: you can also use:* `debuglater crash.py.dump`
 
 <!-- #endregion -->
 
@@ -66,8 +68,10 @@ jupyter execute crash.ipynb
 Debug:
 
 ```
-debuglater jupyter.dump
+dltr jupyter.dump
 ```
+
+*Note: you can also use:* `debuglater jupyter.dump`
 
 ## Motivation
 
