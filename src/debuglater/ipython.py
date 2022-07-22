@@ -9,13 +9,14 @@
 import sys
 import types
 
-from IPython.core.display_trap import DisplayTrap
-
 from debuglater.pydump import save_dump
 
 
 # NOTE: this is based on the IPython implementation
 def debugger(self, force: bool = False):
+    # IPython is an optional depdendency
+    from IPython.core.display_trap import DisplayTrap
+
     if force or self.call_pdb:
         if self.pdb is None:
             self.pdb = self.debugger_cls()

@@ -43,7 +43,7 @@ python -m debuglater crash.py.dump
 Add this at the top of your notebook/script:
 
 ```python
-from debuglater.ipython import patch_ipython
+from debuglater import patch_ipython
 patch_ipython()
 ```
 <!-- #endregion -->
