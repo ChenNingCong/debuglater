@@ -20,7 +20,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
-from __future__ import print_function
 import os
 import sys
 import pdb
@@ -42,8 +41,6 @@ try:
     import dill
 except ImportError:
     dill = None
-
-from pydump import __version__
 
 DUMP_VERSION = 1
 
@@ -275,49 +272,7 @@ def _cache_files(files):
         linecache.cache[name] = (len(data), None, lines, name)
 
 
-def main():
-    import argparse
-
-    parser = argparse.ArgumentParser(
-        description="%s v%s: post-mortem debugging for Python programs" %
-        (sys.executable, __version__))
-    debugger_group = parser.add_mutually_exclusive_group(required=False)
-    debugger_group.add_argument(
-        "--pdb",
-        action="store_const",
-        const="pdb",
-        dest="debugger",
-        help="Use builtin pdb or pdb++",
-    )
-    debugger_group.add_argument(
-        "--pudb",
-        action="store_const",
-        const="pudb",
-        dest="debugger",
-        help="Use pudb visual debugger",
-    )
-    debugger_group.add_argument(
-        "--ipdb",
-        action="store_const",
-        const="ipdb",
-        dest="debugger",
-        help="Use ipdb IPython debugger",
-    )
-    parser.add_argument("filename", help="dumped file")
-    args = parser.parse_args()
-    if not args.debugger:
-        args.debugger = "pdb"
-
-    print("Starting %s..." % args.debugger, file=sys.stderr)
-    dbg = __import__(args.debugger)
-    return debug_dump(args.filename, dbg.post_mortem)
-
-
 def run(filename):
     print("Exception caught, writing %s" % filename)
     save_dump(filename)
     print("Run 'python -m pydump %s' to debug" % (filename))
-
-
-if __name__ == "__main__":
-    sys.exit(main() or 0)

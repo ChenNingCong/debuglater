@@ -37,7 +37,7 @@ def debugger(self, force: bool = False):
             self.pdb.botframe = etb.tb_frame
 
             print('Dump stored at ipython.dump')
-            save_dump('ipython.dump', etb)
+            save_dump('jupyter.dump', etb)
             # self.pdb.interaction(None, etb)
 
         if hasattr(self, 'tb'):
