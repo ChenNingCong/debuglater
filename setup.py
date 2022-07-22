@@ -65,5 +65,6 @@ setup(
     ],
     install_requires=[
         'dill',
+        'colorama',
     ],
 )

@@ -32,7 +32,7 @@ python crash.py
 Debug:
 
 ```sh
-dltr crash.py.dump
+dltr crash.dump
 ```
 
 *Note: you can also use:* `debuglater crash.py.dump`

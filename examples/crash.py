@@ -5,5 +5,5 @@ try:
     x / y
 except:
     import debuglater
-    debuglater.run(__file__ + '.dump')
+    debuglater.run(__file__)
     raise

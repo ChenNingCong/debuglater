@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
+from pathlib import Path
 import os
 import sys
 import pdb
@@ -29,6 +30,11 @@ try:
     import cPickle as pickle
 except ImportError:
     import pickle
+
+from colorama import init
+from colorama import Fore, Style
+
+init()
 
 PY2 = (sys.version_info.major == 2)
 
@@ -270,6 +276,9 @@ def _cache_files(files):
 
 
 def run(filename):
-    print("Exception caught, writing %s" % filename)
-    save_dump(filename)
-    print("Run 'python -m debuglater %s' to debug" % (filename))
+    out = Path(filename).with_suffix('.dump')
+
+    print(Fore.RED + f'Exception caught, writing {out}\n')
+    save_dump(out)
+    print(f'To debug, run:\n  dltr {out}')
+    print(Style.RESET_ALL)
