@@ -1,8 +1,8 @@
 <!-- #region -->
-# `debug-later`: Store Python traceback for later debugging
+# `debuglater`: Store Python traceback for later debugging
 
-`debug-later` writes the traceback of an exception that you can later load in
-a Python debugger. `debug-later` works with `pdb`, `pudb`, `ipdb` and `pdbpp`.
+`debuglater` writes the traceback of an exception that you can later load in
+a Python debugger. `debuglater` works with `pdb`, `pudb`, `ipdb` and `pdbpp`.
 
 You can use the generated file to debug on a different machine (assuming the
 environment is the same), without having access to the source code.
@@ -12,7 +12,7 @@ For support, feature requests, and product updates: [join our community](https:/
 ## Installation
 
 ```sh
-pip install debug-later
+pip install debuglater
 ```
 <!-- #endregion -->
 
@@ -20,7 +20,7 @@ pip install debug-later
 
 ```sh
 # get the example
-curl -O https://raw.githubusercontent.com/ploomber/pydump/master/examples/crash.py
+curl -O https://raw.githubusercontent.com/ploomber/debuglater/master/examples/crash.py
 ```
 
 ```sh tags=["raises-exception"]
@@ -32,7 +32,7 @@ python crash.py
 Debug:
 
 ```sh
-python -m pydump crash.py.dump
+python -m debuglater crash.py.dump
 ```
 
 <!-- #endregion -->
@@ -43,7 +43,7 @@ python -m pydump crash.py.dump
 Add this at the top of your notebook/script:
 
 ```python
-from pydump.ipython import patch_ipython
+from debuglater.ipython import patch_ipython
 patch_ipython()
 ```
 <!-- #endregion -->
@@ -52,7 +52,7 @@ Run it (also works with papermill):
 
 ```sh
 # get sample notebook
-curl -O https://raw.githubusercontent.com/ploomber/pydump/master/examples/crash.ipynb
+curl -O https://raw.githubusercontent.com/ploomber/debuglater/master/examples/crash.ipynb
 
 # install package to run notebooks
 pip install nbclient
@@ -66,7 +66,7 @@ jupyter execute crash.ipynb
 Debug:
 
 ```
-python -m pydump jupyter.dump
+python -m debuglater jupyter.dump
 ```
 
 ## Motivation
@@ -77,7 +77,7 @@ data analysis. When data analysis code executes non-interactively
 since logs are often insufficient, forcing data practitioners to re-run the
 code from scratch, which can take a lot of time.
 
-`debug-later` can be used for any use case to facilitate post-mortem debugging.
+`debuglater` can be used for any use case to facilitate post-mortem debugging.
 
 ## Use cases
 

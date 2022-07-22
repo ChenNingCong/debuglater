@@ -11,7 +11,7 @@ import types
 
 from IPython.core.display_trap import DisplayTrap
 
-from pydump.pydump import save_dump
+from debuglater.pydump import save_dump
 
 
 # NOTE: this is based on the IPython implementation

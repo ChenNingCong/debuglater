@@ -1,4 +1,4 @@
-from pydump.pydump import run
+from debuglater.pydump import run
 
 __all__ = ['run']
 

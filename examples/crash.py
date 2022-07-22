@@ -4,6 +4,6 @@ y = 0
 try:
     x / y
 except:
-    import pydump
-    pydump.run(__file__ + '.dump')
+    import debuglater
+    debuglater.run(__file__ + '.dump')
     raise

@@ -8,13 +8,13 @@ from setuptools import setup
 
 _version_re = re.compile(r'__version__\s+=\s+(.*)')
 
-with open('src/pydump/__init__.py', 'rb') as f:
+with open('src/debuglater/__init__.py', 'rb') as f:
     VERSION = str(
         ast.literal_eval(
             _version_re.search(f.read().decode('utf-8')).group(1)))
 
 DESCRIPTION = """
-Pydump allows post-mortem debugging for Python programs.
+debuglater allows post-mortem debugging for Python programs.
 
 It writes the traceback of an exception into a file and can later load
 it in a Python debugger.
@@ -35,14 +35,14 @@ DEV = [
 ]
 
 setup(
-    name='pydump',
+    name='debuglater',
     version=VERSION,
     description='Post-mortem debugging for Python programs',
     long_description=DESCRIPTION,
     author='Ploomber',
     license='MIT',
     author_email='contact@plooomber.io',
-    url='https://github.com/ploomber/pydump',
+    url='https://github.com/ploomber/debuglater',
     packages=find_packages('src'),
     package_dir={'': 'src'},
     py_modules=[splitext(basename(path))[0] for path in glob('src/*.py')],
@@ -51,7 +51,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'pydump = pydump:main',
+            'debuglater = debuglater:main',
         ],
     },
     classifiers=[

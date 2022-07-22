@@ -1,7 +1,7 @@
 import sys
 
-from pydump import __version__
-from pydump.pydump import debug_dump
+from debuglater import __version__
+from debuglater.pydump import debug_dump
 
 
 def main():

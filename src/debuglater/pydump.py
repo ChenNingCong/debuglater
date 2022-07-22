@@ -52,10 +52,6 @@ def save_dump(filename, tb=None):
 
     The saved file can be loaded with load_dump which creates a fake traceback
     object that can be passed to any reasonable Python debugger.
-
-    The simplest way to do that is to run:
-
-       $ pydump.py my_dump_file.dump
     """
     if not tb:
         tb = sys.exc_info()[2]
@@ -74,9 +70,10 @@ def save_dump(filename, tb=None):
 
 
 def load_dump(filename):
-    # ugly hack to handle running non-install pydump
-    if "pydump.pydump" not in sys.modules:
-        sys.modules["pydump.pydump"] = sys.modules[__name__]
+    # NOTE: I think we can get rid of this
+    # ugly hack to handle running non-install debuglater
+    if "debuglater.pydump" not in sys.modules:
+        sys.modules["debuglater.pydump"] = sys.modules[__name__]
     with gzip.open(filename, "rb") as f:
         if dill is not None:
             try:
@@ -275,4 +272,4 @@ def _cache_files(files):
 def run(filename):
     print("Exception caught, writing %s" % filename)
     save_dump(filename)
-    print("Run 'python -m pydump %s' to debug" % (filename))
+    print("Run 'python -m debuglater %s' to debug" % (filename))

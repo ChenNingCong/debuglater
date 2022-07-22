@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from pydump import pydump
+from debuglater import pydump
 
 
 def foo():
