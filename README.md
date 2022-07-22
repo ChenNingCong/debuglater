@@ -20,8 +20,10 @@ pip install debug-later
 
 ```sh
 # get the example
-curl -O https://raw.githubusercontent.com/ploomber/pydump/dev/examples/crash.py
+curl -O https://raw.githubusercontent.com/ploomber/pydump/master/examples/crash.py
+```
 
+```sh tags=["raises-exception"]
 # crash
 python crash.py
 ```
@@ -32,6 +34,7 @@ Debug:
 ```sh
 python -m pydump crash.py.dump
 ```
+
 <!-- #endregion -->
 
 <!-- #region -->
@@ -48,8 +51,15 @@ patch_ipython()
 Run it (also works with papermill):
 
 ```sh
-pip install nbclient
+# get sample notebook
+curl -O https://raw.githubusercontent.com/ploomber/pydump/master/examples/crash.ipynb
 
+# install package to run notebooks
+pip install nbclient
+```
+
+```sh tags=["raises-exception"]
+# run the notebook
 jupyter execute crash.ipynb
 ```
 
