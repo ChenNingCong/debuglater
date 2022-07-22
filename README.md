@@ -35,6 +35,19 @@ Debug:
 dltr crash.dump
 ```
 
+Upon initialization, try printing the variables `x` and `y`:
+
+```
+Starting pdb...
+> /Users/ploomber/debuglater/examples/crash.py(5)<module>()
+-> x / y
+(Pdb) x
+1
+(Pdb) y
+0
+(Pdb) quit
+```
+
 *Note: you can also use:* `debuglater crash.py.dump`
 
 <!-- #endregion -->
@@ -70,6 +83,19 @@ Debug:
 ```
 dltr jupyter.dump
 ```
+
+Upon initialization, try printing the variables `x` and `y`:
+
+```
+Starting pdb...
+-> x / y
+(Pdb) x
+1
+(Pdb) y
+0
+(Pdb) quit
+```
+
 
 *Note: you can also use:* `debuglater jupyter.dump`
 
