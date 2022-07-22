@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## 1.3.1dev
+* Fixed output message
+* Adds color to output message
 
 ## 1.3 (2022-07-22)
 
