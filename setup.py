@@ -51,7 +51,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'debuglater = debuglater:main',
+            'debuglater = debuglater.cli:main',
         ],
     },
     classifiers=[

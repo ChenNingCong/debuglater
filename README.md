@@ -32,7 +32,7 @@ python crash.py
 Debug:
 
 ```sh
-python -m debuglater crash.py.dump
+debuglater crash.py.dump
 ```
 
 <!-- #endregion -->
@@ -66,7 +66,7 @@ jupyter execute crash.ipynb
 Debug:
 
 ```
-python -m debuglater jupyter.dump
+debuglater jupyter.dump
 ```
 
 ## Motivation
