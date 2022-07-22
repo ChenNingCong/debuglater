@@ -43,7 +43,7 @@ jobs:
       - name: Install jupyblog
         run: |
           pip install --upgrade pip
-          pip install pkgmt nbclient jupytext
+          pip install pkgmt nbclient jupytext ipykernel
           pip install .
       - name: Test readme
         run: |
