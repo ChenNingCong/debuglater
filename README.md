@@ -1,47 +1,37 @@
-Python post-mortem debugging
-============================
+# debug-later: Store Python traceback for later debugging
 
-Pydump writes the traceback of an exception into a file and 
-can later load it in a Python debugger. It works with the built-in 
-pdb and with other popular debuggers (pudb, ipdb and pdbpp).
+`debug-later` writes the traceback of an exception that you can later load in
+a Python debugger. `debug-later` works with `pdb`, `pudb`, `ipdb` and `pdbpp`.
 
-Why I wrote this?
-=================
+You can use the generated file to debug on a different machine (assuming the
+environment is the same), without having access to the source code.
 
-I spent way too much time trying to discern details about bugs from
-logs that don't have enough information in them. Wouldn't it be nice
-to be able to open a debugger and load the entire stack of the crashed
-process into it and look around like you would if it crashed on your own 
-machine?
+## Installation
 
-Possible uses
-=============
+```sh
+pip install debug-later
+```
 
-This project (or approach) might be useful in multiprocessing environments
-running many unattended processes. The most common case for me is on
-production web servers that I can't really stop and debug. For each 
-exception caught, I write a dump file and I can debug each issue on 
-my own time, on my own box, even if I don't have the source, since 
-the relevant source is stored in the dump file.
+## Example
 
-Version History
-===============
+```
+```
 
-1.2.0
------
-* Port to Python 3
+## Motivation
 
-1.1.1
------
-* Fixed a few small bugs.
+The [Ploomber team](https://github.com/ploomber/ploomber) develops tools for
+data analysis. When data analysis code executes non-interactively
+(example: a daily cron job that generates a report), it becomes hard to debug
+since logs are often insufficient, forcing data practitioners to re-run the
+code from scratch, which can take a lot of time.
 
-1.1.0
------
+`debug-later` can be used for any use case to facilitate post-mortem debugging.
 
-* Now storing built-in datatypes and custom class data members
-  instead of their string representations.
+## Use cases
 
-1.0.0
------
+* Debug long-running code (e.g., crashed Machine Learning job)
+* Debug multiprocessing code (generate one dump file for each process)
 
-* First public version
+## Credits
+
+This project is a fork of [Eli Finer's pydump](https://github.com/elifiner/pydump).
