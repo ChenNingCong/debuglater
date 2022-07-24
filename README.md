@@ -9,6 +9,8 @@ environment is the same), without having access to the source code.
 
 For support, feature requests, and product updates: [join our community](https://ploomber.io/community) or follow us on [Twitter](https://twitter.com/ploomber)/[LinkedIn](https://www.linkedin.com/company/ploomber/).
 
+![demo](https://ploomber.io/images/doc/debuglater-demo/debug.gif)
+
 ## Installation
 
 ```sh
@@ -55,6 +57,9 @@ Starting pdb...
 <!-- #region -->
 ## Integration with Jupyter/IPython
 
+> **Note**
+> For an integration with papermill, see [ploomber-engine](https://github.com/ploomber/ploomber-engine)
+
 Add this at the top of your notebook/script:
 
 ```python
@@ -62,8 +67,6 @@ from debuglater import patch_ipython
 patch_ipython()
 ```
 <!-- #endregion -->
-
-Run it (also works with papermill):
 
 ```sh
 # get sample notebook
