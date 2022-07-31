@@ -18,7 +18,7 @@ def setup(c, version=None):
     print(f'Done! Activate your environment with:\nconda activate {env_name}')
 
 
-@task
+@task(aliases=['v'])
 def version(c):
     """Release a new version
     """
@@ -26,7 +26,7 @@ def version(c):
     versioneer.version(project_root='.', tag=True)
 
 
-@task
+@task(aliases=['r'])
 def release(c, tag, production=True):
     """Upload to PyPI
     """
