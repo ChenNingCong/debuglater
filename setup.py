@@ -23,6 +23,17 @@ Works with the built-in pdb and with other popular debuggers
 (pudb, ipdb and pdbpp).
 """
 
+# requirements
+REQUIRES = [
+    'colorama',
+]
+
+# optional requirements
+ALL = [
+    'dill',
+]
+
+# only needed for development
 DEV = [
     'pytest',
     'yapf',
@@ -48,6 +59,7 @@ setup(
     py_modules=[splitext(basename(path))[0] for path in glob('src/*.py')],
     extras_require={
         'dev': DEV,
+        'all': ALL,
     },
     entry_points={
         'console_scripts': [
@@ -63,8 +75,5 @@ setup(
         'Programming Language :: Python',
         'Topic :: Software Development :: Debuggers'
     ],
-    install_requires=[
-        'dill',
-        'colorama',
-    ],
+    install_requires=REQUIRES,
 )
