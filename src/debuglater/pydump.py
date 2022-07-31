@@ -51,6 +51,11 @@ except ImportError:
 DUMP_VERSION = 1
 
 
+def _print_not_dill():
+    print("Using pickle. For better serializations "
+          "support: pip install 'debuglater[all]'\n")
+
+
 def save_dump(filename, tb=None):
     """
     Saves a Python traceback in a pickled file. This function will usually be called from
@@ -72,6 +77,7 @@ def save_dump(filename, tb=None):
         if dill is not None:
             dill.dump(dump, f)
         else:
+            _print_not_dill()
             pickle.dump(dump, f, protocol=pickle.HIGHEST_PROTOCOL)
 
 
@@ -90,6 +96,9 @@ def load_dump(filename):
                         return dill.load(f)
                 except:
                     pass  # dill load failed, try pickle instead
+        else:
+            _print_not_dill()
+
         try:
             return pickle.load(f)
         except IOError:

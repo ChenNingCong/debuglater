@@ -14,7 +14,11 @@ For support, feature requests, and product updates: [join our community](https:/
 ## Installation
 
 ```sh
+
 pip install debuglater
+
+# for better serialization support (via dill)
+pip install 'debuglater[all]'
 ```
 <!-- #endregion -->
 
