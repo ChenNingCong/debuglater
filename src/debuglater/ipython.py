@@ -8,12 +8,13 @@
 #*****************************************************************************
 import sys
 import types
+from functools import partial
 
 from debuglater.pydump import save_dump
 
 
 # NOTE: this is based on the IPython implementation
-def debugger(self, force: bool = False):
+def debugger(self, force: bool = False, path_to_dump: str = 'jupyter.dump'):
     # IPython is an optional depdendency
     from IPython.core.display_trap import DisplayTrap
 
@@ -37,18 +38,19 @@ def debugger(self, force: bool = False):
                 etb = etb.tb_next
             self.pdb.botframe = etb.tb_frame
 
-            print('Dump stored at ipython.dump')
-            save_dump('jupyter.dump', etb)
+            print(f'Dump stored at {path_to_dump}')
+            save_dump(path_to_dump, etb)
             # self.pdb.interaction(None, etb)
 
         if hasattr(self, 'tb'):
             del self.tb
 
 
-def patch_ipython():
+def patch_ipython(path_to_dump='jupyter.dump'):
     # optional dependency
     import IPython
     term = IPython.get_ipython()
     term.run_line_magic('pdb', 'on')
-    term.InteractiveTB.debugger = types.MethodType(debugger,
+    debugger_ = partial(debugger, path_to_dump=path_to_dump)
+    term.InteractiveTB.debugger = types.MethodType(debugger_,
                                                    term.InteractiveTB)
