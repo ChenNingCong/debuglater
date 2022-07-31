@@ -1,5 +1,7 @@
 # CHANGELOG
 
+## 1.3.3dev
+
 ## 1.3.2 (2022-07-31)
 * Makes `dill` an optional dependency
 * Prints message if missing dill
