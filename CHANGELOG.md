@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 1.3.2dev
+## 1.3.2 (2022-07-31)
 * Makes `dill` an optional dependency
 * Prints message if missing dill
 * Adds argument to select the path to dump file when patching IPython

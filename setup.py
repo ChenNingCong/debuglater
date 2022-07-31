@@ -40,6 +40,7 @@ DEV = [
     'flake8',
     'invoke',
     'twine',
+    'pkgmt',
     # for tests
     'pandas',
     'numpy',
