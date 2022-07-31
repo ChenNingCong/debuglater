@@ -58,7 +58,7 @@ setup(
     package_dir={'': 'src'},
     py_modules=[splitext(basename(path))[0] for path in glob('src/*.py')],
     extras_require={
-        'dev': DEV,
+        'dev': DEV + ALL,
         'all': ALL,
     },
     entry_points={
