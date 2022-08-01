@@ -13,6 +13,10 @@ from functools import partial
 from debuglater.pydump import save_dump
 
 
+def _dump_message(path_to_dump):
+    return f'Serializing traceback to: {path_to_dump}'
+
+
 # NOTE: this is based on the IPython implementation
 def debugger(self, force: bool = False, path_to_dump: str = 'jupyter.dump'):
     # IPython is an optional depdendency
@@ -38,12 +42,63 @@ def debugger(self, force: bool = False, path_to_dump: str = 'jupyter.dump'):
                 etb = etb.tb_next
             self.pdb.botframe = etb.tb_frame
 
-            print(f'Dump stored at {path_to_dump}')
             save_dump(path_to_dump, etb)
             # self.pdb.interaction(None, etb)
 
         if hasattr(self, 'tb'):
             del self.tb
+
+
+# taken from IPython interactive shell
+def _showtraceback_ipython(self,
+                           etype,
+                           evalue,
+                           stb: str,
+                           path_to_dump: str = 'jupyter.dump'):
+
+    val = self.InteractiveTB.stb2text(stb) + '\n' + _dump_message(path_to_dump)
+
+    try:
+        print(val)
+    except UnicodeEncodeError:
+        print(val.encode("utf-8", "backslashreplace").decode())
+
+
+# taken from ipykernel
+# https://github.com/ipython/ipykernel/blob/51a613d501a86073ea1cdbd8023a168646644c6a/ipykernel/zmqshell.py#L530
+def _showtraceback_jupyter(self, etype, evalue, stb, path_to_dump):
+    from ipykernel.jsonutil import json_clean
+
+    # try to preserve ordering of tracebacks and print statements
+    sys.stdout.flush()
+    sys.stderr.flush()
+
+    stb = stb + [_dump_message(path_to_dump)]
+
+    exc_content = {
+        "traceback": stb,
+        "ename": str(etype.__name__),
+        "evalue": str(evalue),
+    }
+
+    dh = self.displayhook
+    # Send exception info over pub socket for other clients than the caller
+    # to pick up
+    topic = None
+    if dh.topic:
+        topic = dh.topic.replace(b"execute_result", b"error")
+
+    dh.session.send(
+        dh.pub_socket,
+        "error",
+        json_clean(exc_content),
+        dh.parent_header,
+        ident=topic,
+    )
+
+    # FIXME - Once we rely on Python 3, the traceback is stored on the
+    # exception object, so we shouldn't need to store it here.
+    self._last_traceback = stb
 
 
 def patch_ipython(path_to_dump='jupyter.dump'):
@@ -54,3 +109,8 @@ def patch_ipython(path_to_dump='jupyter.dump'):
     debugger_ = partial(debugger, path_to_dump=path_to_dump)
     term.InteractiveTB.debugger = types.MethodType(debugger_,
                                                    term.InteractiveTB)
+
+    _showtraceback_ = partial(_showtraceback_jupyter if hasattr(
+        term, '_last_traceback') else _showtraceback_ipython,
+                              path_to_dump=path_to_dump)
+    term._showtraceback = types.MethodType(_showtraceback_, term)
