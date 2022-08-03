@@ -3,4 +3,4 @@ from debuglater.ipython import patch_ipython
 
 __all__ = ['run', 'patch_ipython']
 
-__version__ = "1.3.3"
+__version__ = "1.3.4dev"

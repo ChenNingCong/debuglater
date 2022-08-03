@@ -1,5 +1,7 @@
 # CHANGELOG
 
+## 1.3.4dev
+
 ## 1.3.3 (2022-08-02)
 * Adds current path to `sys.path` when loading dump
 * Adds `echo` argument to `run` function to disable print output
