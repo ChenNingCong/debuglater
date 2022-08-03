@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## 1.3.3dev
+* Adds current path to `sys.path` when loading dump
+* Adds `echo` argument to `run` function to disable print output
 
 ## 1.3.2 (2022-07-31)
 * Makes `dill` an optional dependency
