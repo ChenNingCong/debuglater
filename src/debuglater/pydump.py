@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
+from contextlib import contextmanager
 from pathlib import Path
 import os
 import sys
@@ -117,7 +118,10 @@ def debug_dump(dump_filename, post_mortem_func=pdb.post_mortem):
         obj, type) or obj.__class__.__name__ == "FakeClass"
     inspect.istraceback = lambda obj: isinstance(
         obj, types.TracebackType) or obj.__class__.__name__ == "FakeTraceback"
-    dump = load_dump(dump_filename)
+
+    with add_to_sys_path('.', chdir=False):
+        dump = load_dump(dump_filename)
+
     _cache_files(dump["files"])
     tb = dump["traceback"]
     _inject_builtins(tb)
@@ -284,10 +288,31 @@ def _cache_files(files):
         linecache.cache[name] = (len(data), None, lines, name)
 
 
-def run(filename):
+def run(filename, echo=True):
     out = Path(filename).with_suffix('.dump')
 
-    print(Fore.RED + f'Exception caught, writing {out}\n')
+    if echo:
+        print(Fore.RED + f'Exception caught, writing {out}\n')
     save_dump(out)
-    print(f'To debug, run:\n  dltr {out}')
-    print(Style.RESET_ALL)
+    if echo:
+        print(f'To debug, run:\n  dltr {out}')
+        print(Style.RESET_ALL)
+
+
+@contextmanager
+def add_to_sys_path(path, chdir=False):
+    cwd_old = os.getcwd()
+
+    if path is not None:
+        path = os.path.abspath(path)
+        sys.path.insert(0, path)
+
+        if chdir:
+            os.chdir(path)
+
+    try:
+        yield
+    finally:
+        if path is not None:
+            sys.path.remove(path)
+            os.chdir(cwd_old)

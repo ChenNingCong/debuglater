@@ -14,7 +14,8 @@ from debuglater.pydump import save_dump
 
 
 def _dump_message(path_to_dump):
-    return f'Serializing traceback to: {path_to_dump}'
+    return (f'Serializing traceback to: {path_to_dump}\n'
+            f'To debug: dltr {path_to_dump}')
 
 
 # NOTE: this is based on the IPython implementation
