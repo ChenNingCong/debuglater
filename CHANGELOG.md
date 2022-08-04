@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## 1.3.4dev
+* Fixes error when serializing traceback objects in Python 3.10 with `pickle`
 
 ## 1.3.3 (2022-08-02)
 * Adds current path to `sys.path` when loading dump
