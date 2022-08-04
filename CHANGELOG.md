@@ -1,5 +1,7 @@
 # CHANGELOG
 
+## 1.4.2dev
+
 ## 1.4.1 (2022-08-03)
 * Updates warning message when missing `dill`
 
