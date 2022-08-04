@@ -1,15 +1,35 @@
 <!-- #region -->
 # `debuglater`: Store Python traceback for later debugging
 
-`debuglater` writes the traceback of an exception that you can later load in
-a Python debugger. `debuglater` works with `pdb`, `pudb`, `ipdb` and `pdbpp`.
 
-You can use the generated file to debug on a different machine (assuming the
-environment is the same), without having access to the source code.
+<p align="center">
+  <a href="https://ploomber.io/community">Community</a>
+  |
+  <a href="https://www.getrevue.co/profile/ploomber">Newsletter</a>
+  |
+  <a href="https://twitter.com/ploomber">Twitter</a>
+  |
+  <a href="https://www.linkedin.com/company/ploomber/">LinkedIn</a>
+  |
+  <a href="https://ploomber.io/">Blog</a>
+  |
+  <a href="https://www.ploomber.io">Website</a>
+  |
+  <a href="https://www.youtube.com/channel/UCaIS5BMlmeNQE4-Gn0xTDXQ">YouTube</a>
+</p>
 
-For support, feature requests, and product updates: [join our community](https://ploomber.io/community) or follow us on [Twitter](https://twitter.com/ploomber)/[LinkedIn](https://www.linkedin.com/company/ploomber/).
+- `debuglater` writes the traceback object so you can use it later for debugging
+- Works with `pdb`, `pudb`, `ipdb` and `pdbpp`
+- You can use it to debug on a different machine, no need to have access to the source code
+
+For support, feature requests, and product updates: [join our community](https://ploomber.io/community), subscribe to our [newsletter](https://www.getrevue.co/profile/ploomber) or follow us on [Twitter](https://twitter.com/ploomber)/[LinkedIn](https://www.linkedin.com/company/ploomber/).
 
 ![demo](https://ploomber.io/images/doc/debuglater-demo/debug.gif)
+
+
+[Click here to tell your friends on Twitter!](https://twitter.com/intent/tweet?text=I%20just%20discovered%20debuglater%20on%20GitHub%3A%20serialize%20Python%20tracebacks%20for%20later%20debugging%21%20%F0%9F%A4%AF&url=https://github.com/ploomber/debuglater/)
+
+[Click here to tell your friends on LinkedIn!](https://www.linkedin.com/sharing/share-offsite/?url=https://github.com/ploomber/debuglater/)
 
 ## Installation
 
@@ -114,7 +134,7 @@ data analysis. When data analysis code executes non-interactively
 since logs are often insufficient, forcing data practitioners to re-run the
 code from scratch, which can take a lot of time.
 
-`debuglater` can be used for any use case to facilitate post-mortem debugging.
+However, `debuglater` is a generic tool that can be used for any use case to facilitate post-mortem debugging.
 
 ## Use cases
 
