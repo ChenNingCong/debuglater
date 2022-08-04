@@ -1,6 +1,7 @@
 # CHANGELOG
 
-## 1.4.1dev
+## 1.4.1 (2022-08-03)
+* Updates warning message when missing `dill`
 
 ## 1.4 (2022-08-03)
 * Fixes error when serializing traceback objects in Python 3.10 with `pickle`
