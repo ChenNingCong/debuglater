@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 1.3.4dev
+## 1.4 (2022-08-03)
 * Fixes error when serializing traceback objects in Python 3.10 with `pickle`
 
 ## 1.3.3 (2022-08-02)
