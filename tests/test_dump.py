@@ -6,6 +6,13 @@ import pytest
 
 from debuglater import pydump
 
+# we assume dill is installed for running these tests
+try:
+    import dill
+    dill  # to keep flake8 happy
+except ModuleNotFoundError:
+    raise Exception('tests require dill')
+
 
 def foo():
     foovar = 7  # noqa
