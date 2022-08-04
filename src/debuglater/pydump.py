@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
+import builtins
 from contextlib import contextmanager
 from pathlib import Path
 import os
@@ -37,13 +38,6 @@ from colorama import Fore, Style
 
 init()
 
-PY2 = (sys.version_info.major == 2)
-
-if PY2:
-    import __builtin__ as builtins
-else:
-    import builtins
-
 try:
     import dill
 except ImportError:
@@ -59,8 +53,9 @@ def _print_not_dill():
 
 def save_dump(filename, tb=None):
     """
-    Saves a Python traceback in a pickled file. This function will usually be called from
-    an except block to allow post-mortem debugging of a failed process.
+    Saves a Python traceback in a pickled file. This function will usually be
+    called from an except block to allow post-mortem debugging of a failed
+    process.
 
     The saved file can be loaded with load_dump which creates a fake traceback
     object that can be passed to any reasonable Python debugger.
@@ -97,7 +92,7 @@ def load_dump(filename):
                 try:
                     with open(filename, "rb") as f:
                         return dill.load(f)
-                except:
+                except Exception:
                     pass  # dill load failed, try pickle instead
         else:
             _print_not_dill()
@@ -111,7 +106,9 @@ def load_dump(filename):
 
 def debug_dump(dump_filename, post_mortem_func=pdb.post_mortem):
     # monkey patching for pdb's longlist command
-    import inspect, types
+    import inspect
+    import types
+
     inspect.isframe = lambda obj: isinstance(
         obj, types.FrameType) or obj.__class__.__name__ == "FakeFrame"
     inspect.iscode = lambda obj: isinstance(
@@ -226,8 +223,9 @@ def _get_traceback_files(traceback):
                 try:
                     files[filename] = open(filename).read()
                 except IOError:
-                    files[
-                        filename] = "couldn't locate '%s' during dump" % frame.f_code.co_filename
+                    files[filename] = ("couldn't locate '%s' "
+                                       "during dump" %
+                                       frame.f_code.co_filename)
             frame = frame.f_back
         traceback = traceback.tb_next
     return files
@@ -243,7 +241,7 @@ def _safe_repr(v):
 def _convert_obj(obj):
     try:
         return FakeClass(_safe_repr(obj), _convert_dict(obj.__dict__))
-    except:
+    except Exception:
         return _convert(obj)
 
 
@@ -260,16 +258,12 @@ def _convert(v):
         try:
             dill.dumps(v)
             return v
-        except:
+        except Exception:
             return _safe_repr(v)
     else:
         from datetime import date, time, datetime, timedelta
 
-        if PY2:
-            BUILTIN = (str, unicode, int, long, float, date, time, datetime,
-                       timedelta)
-        else:
-            BUILTIN = (str, int, float, date, time, datetime, timedelta)
+        BUILTIN = (str, int, float, date, time, datetime, timedelta)
         # XXX: what about bytes and bytearray?
 
         if v is None:

@@ -8,14 +8,14 @@ from debuglater import pydump
 
 
 def foo():
-    foovar = 7
+    foovar = 7  # noqa
     bar()
 
 
 def bar():
-    barvar = "hello"
-    list_sample = [1, 2, 3, 4]
-    dict_sample = {'a': 1, 'b': 2}
+    barvar = "hello"  # noqa
+    list_sample = [1, 2, 3, 4]  # noqa
+    dict_sample = {'a': 1, 'b': 2}  # noqa
     baz()
 
 
@@ -25,12 +25,12 @@ def baz():
 
 
 def numpy():
-    x = np.array([1, 2, 3])
+    x = np.array([1, 2, 3])  # noqa
     1 / 0
 
 
 def pandas():
-    x = pd.DataFrame({'x': [1, 2, 3]})
+    x = pd.DataFrame({'x': [1, 2, 3]})  # noqa
     1 / 0
 
 
@@ -40,7 +40,7 @@ class Momo(object):
         self.momodata = "Some data"
 
     def raiser(self):
-        x = 1
+        x = 1  # noqa
         raise Exception("BOOM!")
 
 
@@ -48,7 +48,7 @@ def test_dump(capsys, monkeypatch):
 
     try:
         foo()
-    except:
+    except Exception:
         filename = __file__ + '.dump'
         pydump.run(filename)
 
@@ -71,7 +71,7 @@ def test_data_structures(capsys, monkeypatch, function, result):
 
     try:
         function()
-    except:
+    except Exception:
         filename = __file__ + '.dump'
         pydump.run(filename)
 

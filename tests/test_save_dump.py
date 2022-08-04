@@ -1,5 +1,4 @@
 import sys
-import pickle
 
 from debuglater import pydump
 
@@ -10,7 +9,7 @@ def test_save_dump_without_dill(tmp_empty, monkeypatch):
 
     try:
         1 / 0
-    except:
+    except Exception:
         tb = sys.exc_info()[2]
 
     pydump.save_dump('name.dump', tb=tb)
