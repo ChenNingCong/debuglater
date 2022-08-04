@@ -69,11 +69,13 @@ def save_dump(filename, tb=None):
         tb = sys.exc_info()[2]
     fake_tb = FakeTraceback(tb)
     _remove_builtins(fake_tb)
+
     dump = {
         "traceback": fake_tb,
         "files": _get_traceback_files(fake_tb),
         "dump_version": DUMP_VERSION,
     }
+
     with gzip.open(filename, "wb") as f:
         if dill is not None:
             dill.dump(dump, f)
@@ -158,7 +160,16 @@ class FakeCode(object):
 
         # co_lines was introduced in a recent version
         if hasattr(code, 'co_lines'):
-            self.co_lines = code.co_lines
+            self.co_lines = FakeCoLines(code.co_lines)
+
+
+class FakeCoLines:
+
+    def __init__(self, co_lines) -> None:
+        self._co_lines = list(co_lines())
+
+    def __call__(self):
+        return iter(self._co_lines)
 
 
 class FakeFrame(object):
