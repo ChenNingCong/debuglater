@@ -47,8 +47,8 @@ DUMP_VERSION = 1
 
 
 def _print_not_dill():
-    print("Using pickle. For better serializations "
-          "support: pip install 'debuglater[all]'\n")
+    print("Using pickle: Only built-in objects will be serialized. "
+          "To serialize everything: pip install 'debuglater[all]'\n")
 
 
 def save_dump(filename, tb=None):
