@@ -310,8 +310,12 @@ def run(filename, echo=True, tb=None):
 def excepthook_factory(filename):
 
     def excepthook(type, value, traceback):
-        print(''.join(format_exception(type, value, traceback)))
-        run(filename, tb=traceback)
+        print(''.join(format_exception(type, value, traceback)),
+              file=sys.stderr,
+              end='')
+
+        if type is not KeyboardInterrupt:
+            run(filename, tb=traceback)
 
     return excepthook
 
