@@ -1,3 +1,5 @@
+from pathlib import Path
+import subprocess
 from unittest.mock import Mock
 
 import numpy as np
@@ -64,6 +66,23 @@ def test_dump(capsys, monkeypatch):
     with monkeypatch.context() as m:
         m.setattr('builtins.input', mock)
         pydump.debug_dump(filename)
+
+    out, _ = capsys.readouterr()
+
+    assert 'x is 1' in out
+
+
+def test_excepthook(capsys, monkeypatch):
+    if Path('examples.crash.dump').is_file():
+        Path('examples.crash.dump').unlink()
+
+    subprocess.run(['python', 'examples/crash.py'])
+
+    mock = Mock(side_effect=['print(f"x is {x}")', 'quit'])
+
+    with monkeypatch.context() as m:
+        m.setattr('builtins.input', mock)
+        pydump.debug_dump('examples/crash.dump')
 
     out, _ = capsys.readouterr()
 

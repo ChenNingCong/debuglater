@@ -40,6 +40,18 @@ pip install debuglater
 # for better serialization support (via dill)
 pip install 'debuglater[all]'
 ```
+
+## Usage
+
+```python
+import sys
+import debuglater
+
+sys.excepthook = debuglater.excepthook_factory(__file__)
+```
+
+For more details and alternative usage, keep reading.
+
 <!-- #endregion -->
 
 ## Example

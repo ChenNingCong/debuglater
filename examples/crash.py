@@ -1,9 +1,9 @@
+import sys
+import debuglater
+
+sys.excepthook = debuglater.excepthook_factory(__file__)
+
 x = 1
 y = 0
 
-try:
-    x / y
-except Exception:
-    import debuglater
-    debuglater.run(__file__)
-    raise
+x / y
