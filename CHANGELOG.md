@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 1.4.2dev
+## 1.4.2 (2022-08-14)
 * Adds `debuglater.excepthook_factory`
 
 ## 1.4.1 (2022-08-03)

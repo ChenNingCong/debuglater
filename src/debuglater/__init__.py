@@ -3,4 +3,4 @@ from debuglater.ipython import patch_ipython
 
 __all__ = ['run', 'excepthook_factory', 'patch_ipython']
 
-__version__ = "1.4.2dev"
+__version__ = "1.4.2"
