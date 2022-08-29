@@ -39,6 +39,9 @@ pip install debuglater
 
 # for better serialization support (via dill)
 pip install 'debuglater[all]'
+
+# ..or with conda
+conda install debuglater -c conda-forge
 ```
 
 ## Usage
