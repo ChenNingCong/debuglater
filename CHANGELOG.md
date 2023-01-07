@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 1.4.4dev
+## 1.4.4 (2023-01-07)
 * `save_dump` creates all parent directories if they don't exist
 
 ## 1.4.3 (2022-08-22)
