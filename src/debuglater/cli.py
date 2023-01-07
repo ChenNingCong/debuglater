@@ -8,8 +8,10 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(
-        description=(f"debuglater {__version__}: "
-                     "post-mortem debugging for Python programs"))
+        description=(
+            f"debuglater {__version__}: " "post-mortem debugging for Python programs"
+        )
+    )
     debugger_group = parser.add_mutually_exclusive_group(required=False)
     debugger_group.add_argument(
         "--pdb",

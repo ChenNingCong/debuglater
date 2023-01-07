@@ -14,12 +14,13 @@ from debuglater.pydump import save_dump
 
 
 def _dump_message(path_to_dump):
-    return (f'Serializing traceback to: {path_to_dump}\n'
-            f'To debug: dltr {path_to_dump}')
+    return (
+        f"Serializing traceback to: {path_to_dump}\n" f"To debug: dltr {path_to_dump}"
+    )
 
 
 # NOTE: this is based on the IPython implementation
-def debugger(self, force: bool = False, path_to_dump: str = 'jupyter.dump'):
+def debugger(self, force: bool = False, path_to_dump: str = "jupyter.dump"):
     # IPython is an optional depdendency
     from IPython.core.display_trap import DisplayTrap
 
@@ -32,7 +33,7 @@ def debugger(self, force: bool = False, path_to_dump: str = 'jupyter.dump'):
         with display_trap:
             self.pdb.reset()
             # Find the right frame so we don't pop up inside ipython itself
-            if hasattr(self, 'tb') and self.tb is not None:
+            if hasattr(self, "tb") and self.tb is not None:
                 etb = self.tb
             else:
                 etb = self.tb = sys.last_traceback
@@ -46,18 +47,16 @@ def debugger(self, force: bool = False, path_to_dump: str = 'jupyter.dump'):
             save_dump(path_to_dump, etb)
             # self.pdb.interaction(None, etb)
 
-        if hasattr(self, 'tb'):
+        if hasattr(self, "tb"):
             del self.tb
 
 
 # taken from IPython interactive shell
-def _showtraceback_ipython(self,
-                           etype,
-                           evalue,
-                           stb: str,
-                           path_to_dump: str = 'jupyter.dump'):
+def _showtraceback_ipython(
+    self, etype, evalue, stb: str, path_to_dump: str = "jupyter.dump"
+):
 
-    val = self.InteractiveTB.stb2text(stb) + '\n' + _dump_message(path_to_dump)
+    val = self.InteractiveTB.stb2text(stb) + "\n" + _dump_message(path_to_dump)
 
     try:
         print(val)
@@ -102,16 +101,19 @@ def _showtraceback_jupyter(self, etype, evalue, stb, path_to_dump):
     self._last_traceback = stb
 
 
-def patch_ipython(path_to_dump='jupyter.dump'):
+def patch_ipython(path_to_dump="jupyter.dump"):
     # optional dependency
     import IPython
-    term = IPython.get_ipython()
-    term.run_line_magic('pdb', 'on')
-    debugger_ = partial(debugger, path_to_dump=path_to_dump)
-    term.InteractiveTB.debugger = types.MethodType(debugger_,
-                                                   term.InteractiveTB)
 
-    _showtraceback_ = partial(_showtraceback_jupyter if hasattr(
-        term, '_last_traceback') else _showtraceback_ipython,
-                              path_to_dump=path_to_dump)
+    term = IPython.get_ipython()
+    term.run_line_magic("pdb", "on")
+    debugger_ = partial(debugger, path_to_dump=path_to_dump)
+    term.InteractiveTB.debugger = types.MethodType(debugger_, term.InteractiveTB)
+
+    _showtraceback_ = partial(
+        _showtraceback_jupyter
+        if hasattr(term, "_last_traceback")
+        else _showtraceback_ipython,
+        path_to_dump=path_to_dump,
+    )
     term._showtraceback = types.MethodType(_showtraceback_, term)
