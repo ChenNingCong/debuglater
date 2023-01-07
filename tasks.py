@@ -1,7 +1,7 @@
 from invoke import task
 
 
-@task
+@task(aliases=['s'])
 def setup(c, version=None):
     """
     Setup dev environment, requires conda
