@@ -29,6 +29,7 @@ import pdb
 import gzip
 import linecache
 from traceback import format_exception
+
 try:
     import cPickle as pickle
 except ImportError:
@@ -48,8 +49,10 @@ DUMP_VERSION = 1
 
 
 def _print_not_dill():
-    print("Using pickle: Only built-in objects will be serialized. "
-          "To serialize everything: pip install 'debuglater[all]'\n")
+    print(
+        "Using pickle: Only built-in objects will be serialized. "
+        "To serialize everything: pip install 'debuglater[all]'\n"
+    )
 
 
 def save_dump(filename, tb=None):
@@ -71,6 +74,8 @@ def save_dump(filename, tb=None):
         "files": _get_traceback_files(fake_tb),
         "dump_version": DUMP_VERSION,
     }
+
+    Path(filename).parent.mkdir(exist_ok=True, parents=True)
 
     with gzip.open(filename, "wb") as f:
         if dill is not None:
@@ -110,16 +115,23 @@ def debug_dump(dump_filename, post_mortem_func=pdb.post_mortem):
     import inspect
     import types
 
-    inspect.isframe = lambda obj: isinstance(
-        obj, types.FrameType) or obj.__class__.__name__ == "FakeFrame"
-    inspect.iscode = lambda obj: isinstance(
-        obj, types.CodeType) or obj.__class__.__name__ == "FakeCode"
-    inspect.isclass = lambda obj: isinstance(
-        obj, type) or obj.__class__.__name__ == "FakeClass"
-    inspect.istraceback = lambda obj: isinstance(
-        obj, types.TracebackType) or obj.__class__.__name__ == "FakeTraceback"
+    inspect.isframe = (
+        lambda obj: isinstance(obj, types.FrameType)
+        or obj.__class__.__name__ == "FakeFrame"
+    )
+    inspect.iscode = (
+        lambda obj: isinstance(obj, types.CodeType)
+        or obj.__class__.__name__ == "FakeCode"
+    )
+    inspect.isclass = (
+        lambda obj: isinstance(obj, type) or obj.__class__.__name__ == "FakeClass"
+    )
+    inspect.istraceback = (
+        lambda obj: isinstance(obj, types.TracebackType)
+        or obj.__class__.__name__ == "FakeTraceback"
+    )
 
-    with add_to_sys_path('.', chdir=False):
+    with add_to_sys_path(".", chdir=False):
         dump = load_dump(dump_filename)
 
     _cache_files(dump["files"])
@@ -132,7 +144,6 @@ def debug_dump(dump_filename, post_mortem_func=pdb.post_mortem):
 
 
 class FakeClass(object):
-
     def __init__(self, repr, vars):
         self.__repr = repr
         self.__dict__.update(vars)
@@ -142,14 +153,13 @@ class FakeClass(object):
 
 
 class FakeCode(object):
-
     def __init__(self, code):
         self.co_filename = os.path.abspath(code.co_filename)
         self.co_name = code.co_name
         self.co_argcount = code.co_argcount
         self.co_consts = tuple(
-            FakeCode(c) if hasattr(c, "co_filename") else c
-            for c in code.co_consts)
+            FakeCode(c) if hasattr(c, "co_filename") else c for c in code.co_consts
+        )
         self.co_firstlineno = code.co_firstlineno
         self.co_lnotab = code.co_lnotab
         self.co_varnames = code.co_varnames
@@ -157,12 +167,11 @@ class FakeCode(object):
         self.co_code = code.co_code
 
         # co_lines was introduced in a recent version
-        if hasattr(code, 'co_lines'):
+        if hasattr(code, "co_lines"):
             self.co_lines = FakeCoLines(code.co_lines)
 
 
 class FakeCoLines:
-
     def __init__(self, co_lines) -> None:
         self._co_lines = list(co_lines())
 
@@ -171,7 +180,6 @@ class FakeCoLines:
 
 
 class FakeFrame(object):
-
     def __init__(self, frame):
         self.f_code = FakeCode(frame.f_code)
         self.f_locals = _convert_dict(frame.f_locals)
@@ -184,12 +192,10 @@ class FakeFrame(object):
 
 
 class FakeTraceback(object):
-
     def __init__(self, traceback):
         self.tb_frame = FakeFrame(traceback.tb_frame)
         self.tb_lineno = traceback.tb_lineno
-        self.tb_next = FakeTraceback(
-            traceback.tb_next) if traceback.tb_next else None
+        self.tb_next = FakeTraceback(traceback.tb_next) if traceback.tb_next else None
         self.tb_lasti = 0
 
 
@@ -198,8 +204,9 @@ def _remove_builtins(fake_tb):
     while traceback:
         frame = traceback.tb_frame
         while frame:
-            frame.f_globals = dict((k, v) for k, v in frame.f_globals.items()
-                                   if k not in dir(builtins))
+            frame.f_globals = dict(
+                (k, v) for k, v in frame.f_globals.items() if k not in dir(builtins)
+            )
             frame = frame.f_back
         traceback = traceback.tb_next
 
@@ -224,9 +231,9 @@ def _get_traceback_files(traceback):
                 try:
                     files[filename] = open(filename).read()
                 except IOError:
-                    files[filename] = ("couldn't locate '%s' "
-                                       "during dump" %
-                                       frame.f_code.co_filename)
+                    files[filename] = (
+                        "couldn't locate '%s' " "during dump" % frame.f_code.co_filename
+                    )
             frame = frame.f_back
         traceback = traceback.tb_next
     return files
@@ -295,24 +302,23 @@ def _cache_files(files):
 
 
 def run(filename, echo=True, tb=None):
-    out = Path(filename).with_suffix('.dump')
+    out = Path(filename).with_suffix(".dump")
 
     if echo:
-        print(Fore.RED + f'Exception caught, writing {out}\n')
+        print(Fore.RED + f"Exception caught, writing {out}\n")
 
     save_dump(out, tb=tb)
 
     if echo:
-        print(f'To debug, run:\n  dltr {out}')
+        print(f"To debug, run:\n  dltr {out}")
         print(Style.RESET_ALL)
 
 
 def excepthook_factory(filename):
-
     def excepthook(type, value, traceback):
-        print(''.join(format_exception(type, value, traceback)),
-              file=sys.stderr,
-              end='')
+        print(
+            "".join(format_exception(type, value, traceback)), file=sys.stderr, end=""
+        )
 
         if type is not KeyboardInterrupt:
             run(filename, tb=traceback)
