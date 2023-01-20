@@ -6,7 +6,7 @@
 <p align="center">
   <a href="https://ploomber.io/community">Community</a>
   |
-  <a href="https://www.getrevue.co/profile/ploomber">Newsletter</a>
+  <a href="https://share.hsforms.com/1E7Qa_OpcRPi_MV-segFsaAe6c2g">Newsletter</a>
   |
   <a href="https://twitter.com/ploomber">Twitter</a>
   |
@@ -23,7 +23,7 @@
 - Works with `pdb`, `pudb`, `ipdb` and `pdbpp`
 - You can use it to debug on a different machine, no need to have access to the source code
 
-For support, feature requests, and product updates: [join our community](https://ploomber.io/community), subscribe to our [newsletter](https://www.getrevue.co/profile/ploomber) or follow us on [Twitter](https://twitter.com/ploomber)/[LinkedIn](https://www.linkedin.com/company/ploomber/).
+For support, feature requests, and product updates: [join our community](https://ploomber.io/community), subscribe to our [newsletter](https://share.hsforms.com/1E7Qa_OpcRPi_MV-segFsaAe6c2g) or follow us on [Twitter](https://twitter.com/ploomber)/[LinkedIn](https://www.linkedin.com/company/ploomber/).
 
 ![demo](https://ploomber.io/images/doc/debuglater-demo/debug.gif)
 
