@@ -23,9 +23,11 @@ jobs:
           # check the package is importable
           python -c "import debuglater"
           pip install ".[dev]"
-      - name: Lint with flake8
+      - name: Lint
         run: |
-          flake8
+          python -m pip install --upgrade pkgmt
+          pkgmt lint
+
       - name: Test with pytest
         run: |
           pytest

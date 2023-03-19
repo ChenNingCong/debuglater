@@ -55,7 +55,6 @@ def debugger(self, force: bool = False, path_to_dump: str = "jupyter.dump"):
 def _showtraceback_ipython(
     self, etype, evalue, stb: str, path_to_dump: str = "jupyter.dump"
 ):
-
     val = self.InteractiveTB.stb2text(stb) + "\n" + _dump_message(path_to_dump)
 
     try:
