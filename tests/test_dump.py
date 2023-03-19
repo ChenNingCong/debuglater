@@ -54,7 +54,6 @@ class Momo(object):
 
 
 def test_dump(capsys, monkeypatch):
-
     try:
         foo()
     except Exception:
@@ -97,7 +96,6 @@ def test_excepthook(capsys, monkeypatch):
     ],
 )
 def test_data_structures(capsys, monkeypatch, function, result):
-
     try:
         function()
     except Exception:

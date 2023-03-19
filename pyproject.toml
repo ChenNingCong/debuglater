@@ -3,3 +3,4 @@ addopts = "--pdbcls=IPython.terminal.debugger:Pdb"
 
 [tool.pkgmt]
 github = "ploomber/debuglater"
+package_name = "debuglater"
