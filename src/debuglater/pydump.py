@@ -55,7 +55,7 @@ def _print_not_dill():
     )
 
 
-def save_dump(filename, tb=None):
+def save_dump(filename, echo, type, value, tb):
     """
     Saves a Python traceback in a pickled file. This function will usually be
     called from an except block to allow post-mortem debugging of a failed
@@ -70,6 +70,8 @@ def save_dump(filename, tb=None):
     _remove_builtins(fake_tb)
 
     dump = {
+        "type" : type,
+        "value" : value,
         "traceback": fake_tb,
         "files": _get_traceback_files(fake_tb),
         "dump_version": DUMP_VERSION,
@@ -301,13 +303,13 @@ def _cache_files(files):
         linecache.cache[name] = (len(data), None, lines, name)
 
 
-def run(filename, echo=True, tb=None):
+def run(filename, echo, type, value, tb):
     out = Path(filename).with_suffix(".dump")
 
     if echo:
         print(Fore.RED + f"Exception caught, writing {out}\n")
 
-    save_dump(out, tb=tb)
+    save_dump(out, echo, type, value, tb)
 
     if echo:
         print(f"To debug, run:\n  dltr {out}")
@@ -321,7 +323,7 @@ def excepthook_factory(filename):
         )
 
         if type is not KeyboardInterrupt:
-            run(filename, tb=traceback)
+            run(filename, echo=True, type=type, value=value, tb=traceback)
 
     return excepthook
 
