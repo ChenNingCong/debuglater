@@ -317,7 +317,7 @@ def run(filename, echo, type, value, tb):
         print(Style.RESET_ALL)
 
 
-def excepthook_factory(filename):
+def excepthook_factory(filename, original_hook = None):
     def excepthook(type, value, traceback):
         print(
             "".join(format_exception(type, value, traceback)), file=sys.stderr, end=""
@@ -325,7 +325,8 @@ def excepthook_factory(filename):
 
         if type is not KeyboardInterrupt:
             run(filename, echo=True, type=type, value=value, tb=traceback)
-
+        if original_hook is not None:
+            original_hook(type, value, traceback)
     return excepthook
 
 
