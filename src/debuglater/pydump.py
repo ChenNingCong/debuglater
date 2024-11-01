@@ -143,6 +143,7 @@ def debug_dump(dump_filename, post_mortem_func=pdb.post_mortem):
     linecache.checkcache = lambda filename=None: None
     post_mortem_func(tb)
     linecache.checkcache = _old_checkcache
+    return dump
 
 
 class FakeClass(object):
